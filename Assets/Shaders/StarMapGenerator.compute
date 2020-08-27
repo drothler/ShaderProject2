@@ -1,0 +1,89 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+
+
+
+int texSize;
+float3 viewDir;
+float3 origin;
+float3 zAxis;
+float radius;
+uint length;
+
+
+
+
+struct Star{
+        float rad;
+        float dec;
+        float mag;
+    };
+
+
+
+
+
+
+
+//Shader takes Star Buffer as input with their respective right acension and declination angles, as well as their magnitude
+
+RWStructuredBuffer<Star> stardata;
+
+//Shader writes output to outputBuffer, which will contain the star position in x,y,z and its magnitude rotated around the origin
+
+RWStructuredBuffer<float4> outputBuffer;
+
+
+//First the y rotation is computed, here we pass rad in degrees and rotate around the origin
+
+float3 computeYRotation(float3 rotateVec, float rad){
+    return float3(cos(rad)*rotateVec.x+sin(rad)*rotateVec.z,
+            0,
+            -sin(rad)*rotateVec.x+cos(rad)*rotateVec.z);
+}
+//Here we calculate the rotation around the local x axis, which is done by taking a simplified version of a regular rotation matrix
+
+float3 computeDegRotation(float3 rotateVec, float dec){
+    float3 localX = cross(rotateVec, float3(0,1,0));
+    normalize(localX);
+    //Multiply with rotation matrix around axis localX = (x, 0, z)
+    return normalize(float3(rotateVec.x*(cos(dec)+localX.x*localX.x*(1-cos(dec)))+rotateVec.z*localX.x*localX.z*(1-cos(dec)),
+            rotateVec.x*localX.z*sin(dec)-rotateVec.z*localX.x*sin(dec),
+            rotateVec.x*localX.z*localX.x*(1-cos(dec))+rotateVec.z*(cos(dec)+localX.z*localX.z*(1-cos(dec)))));
+}
+
+//Calculates the x,y,z position with respect to rad and dec in degrees
+
+float3 calcPosForStar(float rad, float dec)
+{
+    float3 worldPos;
+
+    float3 rotatedVector =computeDegRotation(computeYRotation(float3(0,0,-1), -rad), -dec);
+    float3 scaledVector = rotatedVector*radius;
+    worldPos = origin+scaledVector;
+    
+    return float3(worldPos);
+}
+
+
+//Main function, 128 threads for 9096 star structs
+[numthreads(128,1,1)]
+void CSMain (uint3 threadID : SV_GroupThreadID, uint3 groupID : SV_GroupID)
+{
+    //As there are not perfect 128*71 stars, we have to add one more extra group, which is why we need to check for out of bounds exceptions
+    if((groupID.x*72+threadID.x)<length){
+        Star star = stardata[groupID.x*128+threadID.x];
+        float3 pos = calcPosForStar(star.rad, star.dec);
+        float4 result = {pos.x, pos.y, pos.z,star.mag};
+
+        
+        outputBuffer[groupID.x*128+threadID.x]=result;
+    } else {
+        outputBuffer[groupID.x*128+threadID.x]=float4(3,2,3,4);
+        return;
+    }
+}
+
+
+

@@ -1,0 +1,46 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+//This implements Voronoi Noise Generation to a texture for use on water
+
+//Noise Texture Buffer and Ripple Buffer
+RWTexture2D<float4> noiseRes;
+
+//delta time and the amount of cells in generation
+float time;
+float scale;
+
+float2 random2(float2 p) {
+    return frac(sin(float2(dot(p,float2(127.1,311.7)),dot(p,float2(269.5,183.3))))*43758.5453);
+}
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	float2 pos = id.xy * scale;
+	float3 col = 0;
+
+    float minDistToCell = 100000;
+	float2 int_tile = floor(pos);
+	float2 float_tile = frac(pos);
+
+	int samedist = 0;
+
+	for (int y= -1; y <= 1; y++) {
+        for (int x= -1; x <= 1; x++) {
+            float2 adjacent = float2(float(x),float(y)); //calculate adjacent cell
+            float2 focus = random2(int_tile + adjacent); //calculate the focus point in a neighbour cell
+            focus = 0.5 + 0.5 * sin(time + 6.2831*focus); //move the focus for a smooth water change
+            float2 diff = adjacent + focus - float_tile; //calculate the difference between focus and pixel
+            float dist = length(diff);
+			samedist = abs(minDistToCell - dist) < 0.01 ? 1 : 0;
+            minDistToCell = min(minDistToCell, dist); //see if this is the minimum distance
+        }
+    }
+
+	col = smoothstep(0.0, 1.0, minDistToCell / 3);
+
+    noiseRes[id.xy] = float4(col,1);
+}
+
+

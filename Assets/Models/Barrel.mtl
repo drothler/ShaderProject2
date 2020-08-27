@@ -1,0 +1,87 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 30.05.2014 20:39:26
+
+newmtl Barrel1
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\TEMP\Barrel\Barrel_1_DIFF.png
+	map_Kd C:\TEMP\Barrel\Barrel_1_DIFF.png
+	map_Ks C:\TEMP\Barrel\Barrel_1_SPC.png
+	map_bump C:\TEMP\Barrel\Barrel_1_NRM.png
+	bump C:\TEMP\Barrel\Barrel_1_NRM.png
+
+newmtl Barrel2
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\TEMP\Barrel\Barrel_2_DIFF.png
+	map_Kd C:\TEMP\Barrel\Barrel_2_DIFF.png
+	map_Ks C:\TEMP\Barrel\Barrel_2_SPC.png
+	map_bump C:\TEMP\Barrel\Barrel_2_NRM.png
+	bump C:\TEMP\Barrel\Barrel_2_NRM.png
+
+newmtl Barrel3
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\TEMP\Barrel\Barrel_3_DIFF.png
+	map_Kd C:\TEMP\Barrel\Barrel_3_DIFF.png
+	map_Ks C:\TEMP\Barrel\Barrel_3_SPC.png
+	map_bump C:\TEMP\Barrel\Barrel_3_NRM.png
+	bump C:\TEMP\Barrel\Barrel_3_NRM.png
+
+newmtl Barrel4
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\TEMP\Barrel\Barrel_4_DIFF.png
+	map_Kd C:\TEMP\Barrel\Barrel_4_DIFF.png
+	map_Ks C:\TEMP\Barrel\Barrel_4_SPC.png
+	map_bump C:\TEMP\Barrel\Barrel_4_NRM.png
+	bump C:\TEMP\Barrel\Barrel_4_NRM.png
+
+newmtl Barrel5
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\TEMP\Barrel\Barrel_5_DIFF.png
+	map_Kd C:\TEMP\Barrel\Barrel_5_DIFF.png
+	map_Ks C:\TEMP\Barrel\Barrel_5_SPC.png
+	map_bump C:\TEMP\Barrel\Barrel_5_NRM.png
+	bump C:\TEMP\Barrel\Barrel_5_NRM.png

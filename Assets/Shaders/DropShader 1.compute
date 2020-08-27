@@ -1,0 +1,36 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+struct Drop{
+	float2 pos;
+	float radius;
+	float maxradius;
+};
+
+RWStructuredBuffer<Drop> drops;
+int dropcount;
+float scale;
+float deviation; //allowable deviation to radius
+RWTexture2D<float4> Result;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    float4 col = float4(0,0,0,0);
+	for(int i = 0; i < dropcount; i++){
+		float diff = distance(id.xy, drops[i].pos);
+		if(diff < drops[i].radius + deviation && diff > drops[i].radius - deviation){
+			col = float4(1,1,1,1);
+			i = dropcount;
+		}
+	}
+    Result[id.xy] = col;
+
+
+
+	/*if(distance(id.xy, float2(0,0)) < 22 && distance(id.xy, float2(0,0)) > 18){
+		col =  float4(1,1,1,1);
+	}
+
+	Result[id.xy] = col;*/
+}
